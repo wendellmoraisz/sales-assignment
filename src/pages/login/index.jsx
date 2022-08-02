@@ -1,30 +1,28 @@
 import { auth } from "../../services/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
 
-    const { sigInUser, user } = useContext(AuthContext.Provider);
+    const { sigInUser } = useAuth();
 
-    const loginButton = async () => {
+    const setLogin = async () => {
         const provider = new GoogleAuthProvider();
 
         try {
             const result = await signInWithPopup(auth, provider);
-            console.log(result);
             sigInUser({
                 username: result.user.displayName,
                 photoUrl: result.user.photoURL,
+                id: result.user.uid,
             });
-            console.log(user);
         } catch (e) {
             console.log(e);
         }
     }
 
     return (
-        <button onClick={loginButton}>Login</button>
+        <button onClick={setLogin}>Login</button>
     )
 }
 
