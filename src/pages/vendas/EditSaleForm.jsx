@@ -1,9 +1,8 @@
 import * as S from "./EditSaleForm.styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { db } from "../../services/firebase";
 import { useState, useEffect } from "react";
-import { updateDoc, doc } from "firebase/firestore";
+import updateSale from "../../services/updateSale";
 
 const EditSaleForm = ({
     isVisible,
@@ -15,14 +14,8 @@ const EditSaleForm = ({
     changeVisibility,
     refreshTable }) => {
 
-    const updateSale = async () => {
-        const docRef = doc(db, "sales", saleId);
-        await updateDoc(docRef, {
-            clientName: saleClientName,
-            value: saleValue,
-            product: saleProduct,
-            date: saleDate,
-        });
+    const editSale = async () => {
+        await updateSale(saleId, saleClientName, saleValue, saleProduct, saleDate);
         refreshTable();
         changeVisibility(!isVisible);
     }
@@ -48,7 +41,7 @@ const EditSaleForm = ({
                             <S.CloseButton onClick={() => changeVisibility(!isVisible)}>
                                 <FontAwesomeIcon icon={faXmark} />
                             </S.CloseButton>
-                            
+
                             <p>Nome do cliente</p>
                             <input
                                 type="text"
@@ -77,7 +70,7 @@ const EditSaleForm = ({
                                 <p></p>
                                 <div>
 
-                                    <S.ConfirmButton onClick={updateSale}>
+                                    <S.ConfirmButton onClick={editSale}>
                                         Confirmar
                                     </S.ConfirmButton>
                                 </div>
