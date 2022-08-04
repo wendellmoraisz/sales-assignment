@@ -7,6 +7,7 @@ import Link from "next/link";
 import formatPrice from "../../utils/formatPrice";
 import EditSaleForm from "./EditSaleForm";
 import getSales from "../../services/getSales";
+import deleteSale from "../../services/deleteSale";
 
 const ListSales = () => {
     const { user } = useAuth();
@@ -21,6 +22,11 @@ const ListSales = () => {
             newSalesState.push(data);
             setSales(newSalesState);
         });
+    }
+
+    const removeSale = async (saleId) => {
+        await deleteSale(saleId);
+        setSalesInTable();
     }
 
     useEffect(() => {
@@ -82,7 +88,7 @@ const ListSales = () => {
                                         <S.EditButton onClick={() => showEditForm(id, clientName, value, product, date)}>
                                             <FontAwesomeIcon icon={faPencil} />
                                         </S.EditButton>
-                                        <S.DeleteButton onClick={() => { }}>
+                                        <S.DeleteButton onClick={() => removeSale(id)}>
                                             <FontAwesomeIcon icon={faTrashCan} />
                                         </S.DeleteButton>
                                     </td>
