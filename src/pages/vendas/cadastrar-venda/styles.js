@@ -1,16 +1,21 @@
 import styled from "styled-components";
+import { ConfirmButton, FormWrapper } from "../EditSaleForm.styles";
 
-export const FormWrapper = styled.div`
+export const Container = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+`;
 
-    div {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
+export const FormContainer = styled(FormWrapper)`
+    position: static;
+`;
+
+export const ConfirmRegisterButton = styled(ConfirmButton)`
+    &:hover{
+        transform: scale(1.01);
     }
 `;

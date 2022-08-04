@@ -26,27 +26,31 @@ const RegisterSale = () => {
     }
 
     return (
-        <S.FormWrapper>
+        <S.Container>
             <h1>Realizar venda</h1>
-            <div >
+            <S.FormContainer >
+                <p>Nome do cliente</p>
                 <input
                     type="text"
-                    placeholder="Nome do cliente"
                     onChange={e => setClientName(e.target.value)} />
+                
+                <p>Produto</p>
                 <input
                     type="text"
-                    placeholder="produto"
                     onChange={e => setProduct(e.target.value)} />
+                
+                <p>Valor</p>
                 <input
                     type="number"
-                    placeholder="valor"
                     onChange={e => setSaleValue(e.target.value)} />
+
+                <p>Data</p>
                 <input
-                    type="date"
+                    type="date" 
                     onChange={e => setSaleDate(e.target.value)} />
-                <button onClick={createSale}>confirmar</button>
-            </div>
-        </S.FormWrapper>
+                <S.ConfirmRegisterButton onClick={createSale}>Confirmar</S.ConfirmRegisterButton>
+            </S.FormContainer>
+        </S.Container>
     )
 }
 

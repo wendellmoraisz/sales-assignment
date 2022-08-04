@@ -30,12 +30,13 @@ export const FormWrapper = styled.div`
     padding: 32px;
     background-color: #fff;
     border-radius: 16px;
-      box-shadow: 0 7px 30px -10px rgba(150,170,180,0.8);
+    box-shadow: 0 7px 30px -10px rgba(150,170,180,0.8);
     animation: ${moveElement} .3s normal;
 
     p {
         margin-top: 16px;
     }
+
     input {
         height: 32px;
         padding: 0 12px;
@@ -44,6 +45,16 @@ export const FormWrapper = styled.div`
         border: none;
         border-radius: 16px;
         background-color: #eeee;
+        transition: all .3s;
+
+        &:focus{
+            box-shadow: 0 7px 15px -10px #000;
+        }
+
+    }
+
+    @media (max-width: 550px) {
+        width: 90vw;
     }
 `;
 
