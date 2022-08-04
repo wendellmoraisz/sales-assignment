@@ -17,7 +17,7 @@ const Login = () => {
                 photoUrl: result.user.photoURL,
                 id: result.user.uid,
             });
-            Router.push("/vendas/cadastrar-venda");
+            Router.push("/vendas");
         } catch (e) {
             console.log(e);
         }

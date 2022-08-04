@@ -1,5 +1,3 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../services/firebase";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import * as S from "./styles";
@@ -7,25 +5,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPencil, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import formatPrice from "../../utils/formatPrice";
+import EditSaleForm from "./EditSaleForm";
+import getSales from "../../services/getSales";
 
 const ListSales = () => {
     const { user } = useAuth();
     const [sales, setSales] = useState([]);
 
-    const getSales = async () => {
-        const salesRef = collection(db, "sales");
-        const q = query(salesRef, where("seller.id", "==", user.id));
-        const result = await getDocs(q);
+    const setSalesInTable = async () => {
+        const result = await getSales(user.id);
         const newSalesState = [];
         result.forEach(sale => {
-            newSalesState.push(sale.data());
+            const data = sale.data();
+            data.id = sale.id;
+            newSalesState.push(data);
             setSales(newSalesState);
         });
     }
 
     useEffect(() => {
-        getSales();
+        setSalesInTable();
     }, []);
+
+    const [editFormIsVisible, setEditFormIsVisible] = useState(false);
+    const [clientNameInForm, setClientNameInForm] = useState();
+    const [saleValue, setSaleValue] = useState();
+    const [productInForm, setProductInForm] = useState();
+    const [saleDateInForm, setDateSaleInForm] = useState();
+    const [saleIdInForm, setSaleIdInForm] = useState();
+
+    const showEditForm = (saleId, clientName, saleValue, product, date) => {
+        setClientNameInForm(clientName);
+        setDateSaleInForm(date);
+        setProductInForm(product);
+        setSaleValue(saleValue);
+        setSaleIdInForm(saleId);
+        setEditFormIsVisible(!editFormIsVisible);
+    }
 
     return (
         <S.Container>
@@ -54,7 +70,7 @@ const ListSales = () => {
                     </thead>
                     <tbody>
                         {sales.map(sale => {
-                            const { clientName, value, product, date, commission } = sale;
+                            const { clientName, value, product, date, commission, id } = sale;
                             return (
                                 <tr>
                                     <td>{clientName}</td>
@@ -63,7 +79,7 @@ const ListSales = () => {
                                     <td>{formatPrice(value)}</td>
                                     <td>{formatPrice(commission)}</td>
                                     <td>
-                                        <S.EditButton onClick={() => { }}>
+                                        <S.EditButton onClick={() => showEditForm(id, clientName, value, product, date)}>
                                             <FontAwesomeIcon icon={faPencil} />
                                         </S.EditButton>
                                         <S.DeleteButton onClick={() => { }}>
@@ -76,6 +92,17 @@ const ListSales = () => {
                     </tbody>
                 </S.ProductsTable>
             </S.TableWrapper>
+
+            <EditSaleForm
+                isVisible={editFormIsVisible}
+                clientName={clientNameInForm}
+                value={saleValue}
+                product={productInForm}
+                date={saleDateInForm}
+                saleId={saleIdInForm}
+                changeVisibility={setEditFormIsVisible}
+                refreshTable={setSalesInTable}
+            />
         </S.Container>
     )
 
