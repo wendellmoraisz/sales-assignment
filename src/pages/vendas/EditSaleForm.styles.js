@@ -92,6 +92,6 @@ export const ConfirmButton = styled(Button)`
             rgba(178,112,162,.25) 0 2px 4px,
             rgba(178,112,162,.25) 0 4px 8px,rgba(178,112,162,.25) 0 8px 16px,
             rgba(178,112,162,.25) 0 16px 32px;
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 `;
