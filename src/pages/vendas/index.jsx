@@ -12,6 +12,7 @@ import deleteSale from "../../services/deleteSale";
 const ListSales = () => {
     const { user } = useAuth();
     const [sales, setSales] = useState([]);
+    const [totalCommissionValue, setTotalCommissionValue] = useState(0);
 
     const setSalesInTable = async () => {
         const result = await getSales(user.id);
@@ -28,6 +29,13 @@ const ListSales = () => {
         await deleteSale(saleId);
         setSalesInTable();
     }
+
+    useEffect(() => {
+        if (sales.length > 0)
+            setTotalCommissionValue(sales
+                .map(sale => sale.commission)
+                .reduce((commission, nextCommission) => commission + nextCommission));
+    }, [sales]);
 
     useEffect(() => {
         setSalesInTable();
@@ -53,7 +61,11 @@ const ListSales = () => {
         <S.Container>
             <S.TableCaption>
                 <div>
-                    <h3>Olá, {user.username}. Aqui estão suas vendas</h3>
+                    <div style={{ display: "block" }}>
+                        <h3>Olá, {user.username}. Aqui estão suas vendas</h3>
+                        <p>Total de Vendas: {sales.length}</p>
+                        <p>Comissão total: {formatPrice(totalCommissionValue)}</p>
+                    </div>
                     <Link href="/vendas/cadastrar-venda">
                         <S.AddButton onClick={() => { }}>
                             <FontAwesomeIcon icon={faCirclePlus} />
@@ -75,10 +87,10 @@ const ListSales = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sales.map(sale => {
+                        {sales.map((sale, index) => {
                             const { clientName, value, product, date, commission, id } = sale;
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td>{clientName}</td>
                                     <td>{product}</td>
                                     <td>{date}</td>
