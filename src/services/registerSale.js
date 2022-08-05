@@ -11,7 +11,7 @@ const registerSale = async (user, clientName, product, value, date, isFirst, has
             value,
             date,
             seller: user,
-            status: null,
+            status: "pendente",
             commission: calculateCommission(value, isFirst, hasPercentageBonus),
         });
     }
