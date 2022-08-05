@@ -2,7 +2,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import calculateCommission from "../utils/calculateCommission";
 
-const registerSale = async (user, clientName, product, value, date) => {
+const registerSale = async (user, clientName, product, value, date, isFirst, hasPercentageBonus) => {
 
     try {
         await addDoc(collection(db, "sales"), {
@@ -12,7 +12,7 @@ const registerSale = async (user, clientName, product, value, date) => {
             date,
             seller: user,
             status: null,
-            commission: calculateCommission(value),
+            commission: calculateCommission(value, isFirst, hasPercentageBonus),
         });
     }
     catch (e) {

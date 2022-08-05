@@ -1,17 +1,8 @@
-
-// id (objectId)
-// nome do cliente (string)
-// vendedor (referenceId)
-// produto (string)
-// valor (number)
-// data (date)
-// status (string) (aprovado ou reprovado) [opcional]
-// comissão (number) [opcional]
-
 import { useState } from "react";
 import * as S from "./styles";
 import registerSale from "../../../services/registerSale";
 import useAuth from "../../../hooks/useAuth";
+import getSales from "../../../services/getSales";
 
 const RegisterSale = () => {
 
@@ -21,8 +12,23 @@ const RegisterSale = () => {
     const [saleDate, setSaleDate] = useState();
     const { user } = useAuth();
 
-    const createSale = () => {
-        registerSale(user, clientName, product, saleValue, saleDate);
+    const createSale = async () => {
+        const sales = await getSales(user.id);
+        let isFirst = true;
+        const actualMonth = new Date().getMonth() + 1;
+        const salesOfMonth = [];
+        sales.forEach(sale => {
+            const saleMonth = sale.data().date.split("-")[1];
+            if (saleMonth == actualMonth) {
+                salesOfMonth.push(sale.data().value);
+                isFirst = false;
+            }
+        });
+        const totalValueOfMonth = salesOfMonth.length ?
+            salesOfMonth.reduce((value, nextValue) => Number(value) + Number(nextValue)) :
+            0;
+        const hasPercentageBonus = totalValueOfMonth > 10000;
+        registerSale(user, clientName, product, saleValue, saleDate, isFirst, hasPercentageBonus);
     }
 
     return (
@@ -33,12 +39,12 @@ const RegisterSale = () => {
                 <input
                     type="text"
                     onChange={e => setClientName(e.target.value)} />
-                
+
                 <p>Produto</p>
                 <input
                     type="text"
                     onChange={e => setProduct(e.target.value)} />
-                
+
                 <p>Valor</p>
                 <input
                     type="number"
@@ -46,7 +52,7 @@ const RegisterSale = () => {
 
                 <p>Data</p>
                 <input
-                    type="date" 
+                    type="date"
                     onChange={e => setSaleDate(e.target.value)} />
                 <S.ConfirmRegisterButton onClick={createSale}>Confirmar</S.ConfirmRegisterButton>
             </S.FormContainer>
