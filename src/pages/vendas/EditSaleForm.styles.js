@@ -72,6 +72,10 @@ export const CloseButton = styled(Button)`
     position: absolute;
     top: 1%;
     left: 90%;
+
+    @media(max-width: 450px){
+        left: 87%;
+    }
 `;
 
 export const ConfirmButton = styled(Button)`

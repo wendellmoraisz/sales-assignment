@@ -9,15 +9,18 @@ export const Container = styled.div`
 `;
 
 export const TableWrapper = styled.div`
-    max-height: 80vh;
-    overflow: auto;
-    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
 `;
 
 export const ProductsTable = styled.table`
     padding: 16px;
+    border-radius: 16px 16px 0 0;
     border-collapse: collapse;
     width: 1020px;
+    overflow: hidden;
 
     td, th {
         padding: 12px;
@@ -34,6 +37,14 @@ export const ProductsTable = styled.table`
         padding: 8px;
         border-bottom: 1px solid rgba(0, 0, 0, .8);
     }
+
+    @media (max-width: 1100px){
+        width: 90vw;
+
+        td, th {
+            padding: 2px;
+        }
+    }
 `;
 
 export const TableCaption = styled.div`
@@ -45,6 +56,10 @@ export const TableCaption = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    @media (max-width: 1100px){
+        width: 90vw;
     }
 `;
 

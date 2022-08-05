@@ -4,7 +4,7 @@ import { ConfirmButton } from "./vendas/EditSaleForm.styles";
 export const GoogleLoginButton = styled(ConfirmButton)`
     background-color: #fff;
     color: #3e3e3e;
-    width: 350px;
+    width: 80%;
     margin: 24px auto 0 auto;
     display: flex;
     justify-content: center;

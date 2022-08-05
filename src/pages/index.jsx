@@ -44,7 +44,7 @@ const Login = () => {
                 <p>Senha</p>
                 <input type="password" onChange={e => setUserPassword(e.target.value)} />
                 <S.ConfirmButton
-                    style={{ width: "350px", margin: "24px auto 0 auto" }}
+                    style={{ width: "80%", margin: "24px auto 0 auto" }}
                     onClick={setLoginWithEmail}>
                     Entrar
                 </S.ConfirmButton>
