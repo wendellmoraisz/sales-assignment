@@ -14,8 +14,8 @@ const EditSaleForm = ({
     changeVisibility,
     refreshTable }) => {
 
-    const editSale = async () => {
-        await updateSale(saleId, saleClientName, saleValue, saleProduct, saleDate);
+    const editSale = () => {
+        updateSale(saleId, saleClientName, saleValue, saleProduct, saleDate);
         refreshTable();
         changeVisibility(!isVisible);
     }

@@ -4,14 +4,19 @@ import calculateCommission from "../utils/calculateCommission";
 
 const updateSale = async (saleId, clientName, value, product, date, isAdmin, status = "pendente", isFirst, hasPercentageBonus) => {
     const docRef = doc(db, "sales", saleId);
-    await updateDoc(docRef, {
-        clientName,
-        value,
-        product,
-        date,
-        commission: isAdmin ? calculateCommission(value, isFirst, hasPercentageBonus) : 0,
-        status,
-    });
+    try {
+        const response = await updateDoc(docRef, {
+            clientName,
+            value,
+            product,
+            date,
+            commission: isAdmin ? calculateCommission(value, isFirst, hasPercentageBonus) : 0,
+            status,
+        });
+        return response;
+    } catch (e) {
+        return e;
+    }
 }
 
 export default updateSale;

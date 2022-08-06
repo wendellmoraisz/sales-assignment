@@ -2,7 +2,6 @@ import getSales from "../services/getSales";
 
 const calculateCommissionBonus = async userId => {
     const sales = await getSales(userId);
-    console.log(userId)
     let isFirst = true;
     const actualMonth = new Date().getMonth() + 1;
     const salesOfMonth = [];

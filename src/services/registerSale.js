@@ -4,7 +4,7 @@ import { db } from "../services/firebase";
 const registerSale = async (user, clientName, product, value, date) => {
 
     try {
-        await addDoc(collection(db, "sales"), {
+        const response = await addDoc(collection(db, "sales"), {
             clientName,
             product,
             value,
@@ -13,9 +13,10 @@ const registerSale = async (user, clientName, product, value, date) => {
             status: "pendente",
             commission: 0,
         });
+        return response;
     }
     catch (e) {
-        console.log(e);
+        return e;
     }
 }
 
