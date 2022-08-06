@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ConfirmButton } from "./vendas/EditSaleForm.styles";
+import { ConfirmButton } from "../components/editSaleForm/styles";
 
 export const GoogleLoginButton = styled(ConfirmButton)`
     background-color: #fff;

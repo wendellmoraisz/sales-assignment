@@ -1,4 +1,4 @@
-import * as S from "./EditSaleForm.styles";
+import * as S from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";

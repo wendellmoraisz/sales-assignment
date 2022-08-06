@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPencil, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import formatPrice from "../../utils/formatPrice";
-import EditSaleForm from "./EditSaleForm";
+import EditSaleForm from "../../components/editSaleForm";
 import getSales from "../../services/getSales";
 import deleteSale from "../../services/deleteSale";
 import ReloadButton from "../../components/ReloadButton";

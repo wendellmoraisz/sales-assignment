@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Button } from "../vendas/styles";
+import { Button } from "../../pages/vendas/styles";
 
 export const Container = styled.div`
     height: 100%;
@@ -38,7 +38,7 @@ export const FormWrapper = styled.div`
         margin-top: 16px;
     }
 
-    input[type=text], input[type=password], input[type=number]  {
+    input {
         height: 32px;
         padding: 0 12px;
         font-size: 1.2rem;

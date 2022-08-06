@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ConfirmButton, FormWrapper } from "../EditSaleForm.styles";
+import { ConfirmButton, FormWrapper } from "../../../components/editSaleForm/styles";
 
 export const Container = styled.div`
     width: 100vw;

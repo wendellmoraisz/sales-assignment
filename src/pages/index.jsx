@@ -1,7 +1,7 @@
 import useAuth from "../hooks/useAuth";
 import Router from "next/router";
 import { useState } from "react";
-import * as S from "./vendas/EditSaleForm.styles";
+import * as S from "../components/editSaleForm/styles";
 import { GoogleLoginButton } from "./styles";
 import signInWithEmail from "../services/signInWithEmail";
 import signInWithGoogle from "../services/signInWithGoogle";
