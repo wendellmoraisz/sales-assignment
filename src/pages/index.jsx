@@ -8,6 +8,7 @@ import signInWithGoogle from "../services/signInWithGoogle";
 import Image from "next/image";
 import googleLogo from "../assets/google-icon.svg";
 import getUser from "../services/getUser";
+import MessagePopup from "../components/MessagePopup";
 
 const Login = () => {
 
@@ -15,6 +16,7 @@ const Login = () => {
 
     const [userEmail, setUserEmail] = useState();
     const [userPassword, setUserPassword] = useState();
+    const [loginError, setLoginError] = useState(false);
     let userName, userRole = "";
 
     const setUserLogin = (userId, userName) => {
@@ -40,7 +42,8 @@ const Login = () => {
             });
             return setUserLogin(result.user.uid, userName);
         }
-        console.log(result.errorCode);
+        setLoginError(true);
+        setTimeout(() => setLoginError(false), 2000);
     }
 
     const setLoginWithGoogle = async () => {
@@ -51,6 +54,13 @@ const Login = () => {
 
     return (
         <S.Container>
+            {
+                loginError ?
+                    <MessagePopup
+                        colorBackGround={"#FF8B8B"}
+                        message={"Login inválido"} /> :
+                    null
+            }
             <S.FormWrapper>
                 <p>Email</p>
                 <input type="text" onChange={e => setUserEmail(e.target.value)} />
