@@ -25,7 +25,7 @@ const Login = () => {
             id: userId,
         });
         if (userRole == "vendedor") {
-            Router.push("/vendas");
+            Router.push("/vendas/home");
         } else {
             Router.push("vendas/pendentes");
         }
