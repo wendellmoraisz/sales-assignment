@@ -7,6 +7,7 @@ import signInWithEmail from "../services/signInWithEmail";
 import signInWithGoogle from "../services/signInWithGoogle";
 import Image from "next/image";
 import googleLogo from "../assets/google-icon.svg";
+import getUser from "../services/getUser";
 
 const Login = () => {
 
@@ -14,19 +15,31 @@ const Login = () => {
 
     const [userEmail, setUserEmail] = useState();
     const [userPassword, setUserPassword] = useState();
+    let userName, userRole = "";
 
-    const setUserLogin = user => {
+    const setUserLogin = (userId, userName) => {
         sigInUser({
-            username: user.displayName,
-            photoUrl: user.photoURL,
-            id: user.uid,
+            username: userName,
+            id: userId,
         });
-        Router.push("/vendas");
+        if (userRole == "vendedor") {
+            Router.push("/vendas");
+        } else {
+            Router.push("vendas/pendentes");
+        }
     }
 
     const setLoginWithEmail = async () => {
         const result = await signInWithEmail(userEmail, userPassword);
-        if (result.user) return setUserLogin(result.user);
+        if (result.user) {
+            const user = await getUser(result.user.uid);
+            user.forEach(doc => {
+                const data = doc.data();
+                userName = data.name;
+                userRole = data.role;
+            });
+            return setUserLogin(result.user.uid, userName);
+        }
         console.log(result.errorCode);
     }
 

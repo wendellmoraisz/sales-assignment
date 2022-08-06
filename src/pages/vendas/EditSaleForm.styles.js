@@ -37,7 +37,7 @@ export const FormWrapper = styled.div`
         margin-top: 16px;
     }
 
-    input {
+    input[type=text], input[type=password], input[type=number]  {
         height: 32px;
         padding: 0 12px;
         font-size: 1.2rem;
