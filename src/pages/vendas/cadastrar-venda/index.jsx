@@ -3,6 +3,8 @@ import * as S from "./styles";
 import registerSale from "../../../services/registerSale";
 import useAuth from "../../../hooks/useAuth";
 import MessagePopup from "../../../components/MessagePopup";
+import AccessDeniedPage from "../../../components/accessDenied";
+import verifyUserRole from "../../../utils/verifyUserRole";
 
 const RegisterSale = () => {
 
@@ -43,46 +45,53 @@ const RegisterSale = () => {
     }
 
     return (
-        <S.Container>
+        <>
             {
-                showMessagePopup ?
-                    <MessagePopup
-                        colorBackGround={popupColor}
-                        message={popupMessage} /> :
-                    null
+                verifyUserRole(user, "vendedor") ?
+                    <S.Container>
+                        {
+                            showMessagePopup ?
+                                <MessagePopup
+                                    colorBackGround={popupColor}
+                                    message={popupMessage} /> :
+                                null
+                        }
+                        <h1>Realizar venda</h1>
+                        <S.FormContainer >
+                            <p>Nome do cliente</p>
+                            <input
+                                type="text"
+                                value={clientName}
+                                onChange={e => setClientName(e.target.value)}
+                            />
+
+                            <p>Produto</p>
+                            <input
+                                type="text"
+                                value={product}
+                                onChange={e => setProduct(e.target.value)}
+                            />
+
+                            <p>Valor</p>
+                            <input
+                                type="number"
+                                value={saleValue}
+                                onChange={e => setSaleValue(e.target.value)}
+                            />
+
+                            <p>Data</p>
+                            <input
+                                type="date"
+                                value={saleDate}
+                                onChange={e => setSaleDate(e.target.value)}
+                            />
+                            <S.ConfirmRegisterButton onClick={createSale}>Confirmar</S.ConfirmRegisterButton>
+                        </S.FormContainer>
+                    </S.Container>
+                    :
+                    <AccessDeniedPage />
             }
-            <h1>Realizar venda</h1>
-            <S.FormContainer >
-                <p>Nome do cliente</p>
-                <input
-                    type="text"
-                    value={clientName}
-                    onChange={e => setClientName(e.target.value)}
-                />
-
-                <p>Produto</p>
-                <input
-                    type="text"
-                    value={product}
-                    onChange={e => setProduct(e.target.value)}
-                />
-
-                <p>Valor</p>
-                <input
-                    type="number"
-                    value={saleValue}
-                    onChange={e => setSaleValue(e.target.value)}
-                />
-
-                <p>Data</p>
-                <input
-                    type="date"
-                    value={saleDate}
-                    onChange={e => setSaleDate(e.target.value)}
-                />
-                <S.ConfirmRegisterButton onClick={createSale}>Confirmar</S.ConfirmRegisterButton>
-            </S.FormContainer>
-        </S.Container>
+        </>
     )
 }
 

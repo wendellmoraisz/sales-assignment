@@ -23,6 +23,7 @@ const Login = () => {
         sigInUser({
             username: userName,
             id: userId,
+            role: userRole
         });
         if (userRole == "vendedor") {
             Router.push("/vendas/home");

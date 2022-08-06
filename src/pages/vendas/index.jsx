@@ -9,6 +9,8 @@ import EditSaleForm from "../../components/editSaleForm";
 import getSales from "../../services/getSales";
 import deleteSale from "../../services/deleteSale";
 import ReloadButton from "../../components/ReloadButton";
+import AccessDeniedPage from "../../components/accessDenied";
+import verifyUserRole from "../../utils/verifyUserRole";
 
 const ListSales = () => {
     const { user } = useAuth();
@@ -59,73 +61,80 @@ const ListSales = () => {
     }
 
     return (
-        <S.Container>
-            <S.TableCaption>
-                <div>
-                    <div style={{ display: "block" }}>
-                        <h3>Olá, {user.username}. Aqui estão suas vendas</h3>
-                        <p>Total de Vendas: {sales.length}</p>
-                        <p>Comissão total: {formatPrice(totalCommissionValue)}</p>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                        <Link href="/vendas/cadastrar-venda">
-                            <S.AddButton >
-                                <FontAwesomeIcon icon={faCirclePlus} />
-                                Adicionar Venda
-                            </S.AddButton>
-                        </Link>
-                        <ReloadButton onClickAction={setSalesInTable} />
-                    </div>
-                </div>
-            </S.TableCaption>
-            <S.TableWrapper>
-                <S.ProductsTable>
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Produto</th>
-                            <th>Data</th>
-                            <th>Valor</th>
-                            <th>Comissão</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sales.map((sale, index) => {
-                            const { clientName, value, product, date, commission, id } = sale;
-                            return (
-                                <tr key={index}>
-                                    <td>{clientName}</td>
-                                    <td>{product}</td>
-                                    <td>{date}</td>
-                                    <td>{formatPrice(value)}</td>
-                                    <td>{formatPrice(commission)}</td>
-                                    <td>
-                                        <S.EditButton onClick={() => showEditForm(id, clientName, value, product, date)}>
-                                            <FontAwesomeIcon icon={faPencil} />
-                                        </S.EditButton>
-                                        <S.DeleteButton onClick={() => removeSale(id)}>
-                                            <FontAwesomeIcon icon={faTrashCan} />
-                                        </S.DeleteButton>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </S.ProductsTable>
-            </S.TableWrapper>
+        <>
+            {
+                verifyUserRole(user, "vendedor") ?
+                    <S.Container>
+                        <S.TableCaption>
+                            <div>
+                                <div style={{ display: "block" }}>
+                                    <h3>Olá, {user.username}. Aqui estão suas vendas</h3>
+                                    <p>Total de Vendas: {sales.length}</p>
+                                    <p>Comissão total: {formatPrice(totalCommissionValue)}</p>
+                                </div>
+                                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                                    <Link href="/vendas/cadastrar-venda">
+                                        <S.AddButton >
+                                            <FontAwesomeIcon icon={faCirclePlus} />
+                                            Adicionar Venda
+                                        </S.AddButton>
+                                    </Link>
+                                    <ReloadButton onClickAction={setSalesInTable} />
+                                </div>
+                            </div>
+                        </S.TableCaption>
+                        <S.TableWrapper>
+                            <S.ProductsTable>
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Produto</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Comissão</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {sales.map((sale, index) => {
+                                        const { clientName, value, product, date, commission, id } = sale;
+                                        return (
+                                            <tr key={index}>
+                                                <td>{clientName}</td>
+                                                <td>{product}</td>
+                                                <td>{date}</td>
+                                                <td>{formatPrice(value)}</td>
+                                                <td>{formatPrice(commission)}</td>
+                                                <td>
+                                                    <S.EditButton onClick={() => showEditForm(id, clientName, value, product, date)}>
+                                                        <FontAwesomeIcon icon={faPencil} />
+                                                    </S.EditButton>
+                                                    <S.DeleteButton onClick={() => removeSale(id)}>
+                                                        <FontAwesomeIcon icon={faTrashCan} />
+                                                    </S.DeleteButton>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </S.ProductsTable>
+                        </S.TableWrapper>
 
-            <EditSaleForm
-                isVisible={editFormIsVisible}
-                clientName={clientNameInForm}
-                value={saleValue}
-                product={productInForm}
-                date={saleDateInForm}
-                saleId={saleIdInForm}
-                changeVisibility={setEditFormIsVisible}
-                refreshTable={setSalesInTable}
-            />
-        </S.Container>
+                        <EditSaleForm
+                            isVisible={editFormIsVisible}
+                            clientName={clientNameInForm}
+                            value={saleValue}
+                            product={productInForm}
+                            date={saleDateInForm}
+                            saleId={saleIdInForm}
+                            changeVisibility={setEditFormIsVisible}
+                            refreshTable={setSalesInTable}
+                        />
+                    </S.Container>
+                    :
+                    <AccessDeniedPage />
+            }
+        </>
     )
 
 }

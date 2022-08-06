@@ -5,10 +5,14 @@ import * as S from "../styles";
 import updateSale from "../../../services/updateSale";
 import calculateCommissionBonus from "../../../utils/calculateCommissionBonus";
 import ReloadButton from "../../../components/ReloadButton";
+import useAuth from "../../../hooks/useAuth";
+import AccessDeniedPage from "../../../components/accessDenied";
+import verifyUserRole from "../../../utils/verifyUserRole";
 
 const PendingSales = () => {
 
     const [sales, setSales] = useState([]);
+    const { user } = useAuth();
 
     const setPendingSales = async () => {
         const result = await getPendingSales();
@@ -37,52 +41,58 @@ const PendingSales = () => {
     }
 
     return (
-        <S.Container>
-            <S.TableCaption>
-                <div>
-                    <h3>Vendas Pendentes: {sales.length}</h3>
-                    <ReloadButton onClickAction={setPendingSales} />
-                </div>
-            </S.TableCaption>
-            <S.TableWrapper>
-                <S.ProductsTable>
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Produto</th>
-                            <th>Data</th>
-                            <th>Valor</th>
-                            <th>Vendedor</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sales.map((sale, index) => {
-                            const { clientName, value, product, date, seller, id } = sale;
-                            return (
-                                <tr key={index}>
-                                    <td>{clientName}</td>
-                                    <td>{product}</td>
-                                    <td>{date}</td>
-                                    <td>{formatPrice(value)}</td>
-                                    <td>{seller.username}</td>
-                                    <td>
-                                        <S.EditButton
-                                            onClick={() => approveSale(id, clientName, value, product, date, seller.id)}>
-                                            Aprovar
-                                        </S.EditButton>
-                                        <S.DeleteButton
-                                            onClick={() => rejectSale(id, clientName, value, product, date)}>
-                                            Recusar
-                                        </S.DeleteButton>
-                                    </td>
+        <>
+            {verifyUserRole(user, "admin") ?
+                <S.Container>
+                    <S.TableCaption>
+                        <div>
+                            <h3>Vendas Pendentes: {sales.length}</h3>
+                            <ReloadButton onClickAction={setPendingSales} />
+                        </div>
+                    </S.TableCaption>
+                    <S.TableWrapper>
+                        <S.ProductsTable>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Produto</th>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th>Vendedor</th>
+                                    <th>Ações</th>
                                 </tr>
-                            )
-                        })}
-                    </tbody>
-                </S.ProductsTable>
-            </S.TableWrapper>
-        </S.Container>
+                            </thead>
+                            <tbody>
+                                {sales.map((sale, index) => {
+                                    const { clientName, value, product, date, seller, id } = sale;
+                                    return (
+                                        <tr key={index}>
+                                            <td>{clientName}</td>
+                                            <td>{product}</td>
+                                            <td>{date}</td>
+                                            <td>{formatPrice(value)}</td>
+                                            <td>{seller.username}</td>
+                                            <td>
+                                                <S.EditButton
+                                                    onClick={() => approveSale(id, clientName, value, product, date, seller.id)}>
+                                                    Aprovar
+                                                </S.EditButton>
+                                                <S.DeleteButton
+                                                    onClick={() => rejectSale(id, clientName, value, product, date)}>
+                                                    Recusar
+                                                </S.DeleteButton>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </S.ProductsTable>
+                    </S.TableWrapper>
+                </S.Container>
+                :
+                <AccessDeniedPage />
+            }
+        </>
     )
 }
 
