@@ -32,7 +32,7 @@ const PendingSales = () => {
     }
 
     const rejectSale = async (saleId, clientName, value, product, date) => {
-        await updateSale(saleId, clientName, value, product, date, "reprovado");
+        await updateSale(saleId, clientName, value, product, date, true, "reprovado");
         setPendingSales();
     }
 
