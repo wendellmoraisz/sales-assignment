@@ -4,7 +4,7 @@ import formatPrice from "../../../utils/formatPrice";
 import * as S from "../styles";
 import updateSale from "../../../services/updateSale";
 import calculateCommissionBonus from "../../../utils/calculateCommissionBonus";
-import useAuth from "../../../hooks/useAuth";
+import ReloadButton from "../../../components/ReloadButton";
 
 const PendingSales = () => {
 
@@ -41,6 +41,7 @@ const PendingSales = () => {
             <S.TableCaption>
                 <div>
                     <h3>Vendas Pendentes: {sales.length}</h3>
+                    <ReloadButton onClickAction={setPendingSales} />
                 </div>
             </S.TableCaption>
             <S.TableWrapper>

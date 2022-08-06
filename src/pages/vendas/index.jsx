@@ -8,6 +8,7 @@ import formatPrice from "../../utils/formatPrice";
 import EditSaleForm from "./EditSaleForm";
 import getSales from "../../services/getSales";
 import deleteSale from "../../services/deleteSale";
+import ReloadButton from "../../components/ReloadButton";
 
 const ListSales = () => {
     const { user } = useAuth();
@@ -66,12 +67,15 @@ const ListSales = () => {
                         <p>Total de Vendas: {sales.length}</p>
                         <p>Comissão total: {formatPrice(totalCommissionValue)}</p>
                     </div>
-                    <Link href="/vendas/cadastrar-venda">
-                        <S.AddButton onClick={() => { }}>
-                            <FontAwesomeIcon icon={faCirclePlus} />
-                            Adicionar Venda
-                        </S.AddButton>
-                    </Link>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                        <Link href="/vendas/cadastrar-venda">
+                            <S.AddButton >
+                                <FontAwesomeIcon icon={faCirclePlus} />
+                                Adicionar Venda
+                            </S.AddButton>
+                        </Link>
+                        <ReloadButton onClickAction={setSalesInTable} />
+                    </div>
                 </div>
             </S.TableCaption>
             <S.TableWrapper>
