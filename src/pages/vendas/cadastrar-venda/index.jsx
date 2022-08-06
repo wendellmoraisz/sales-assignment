@@ -2,7 +2,6 @@ import { useState } from "react";
 import * as S from "./styles";
 import registerSale from "../../../services/registerSale";
 import useAuth from "../../../hooks/useAuth";
-import getSales from "../../../services/getSales";
 
 const RegisterSale = () => {
 
@@ -13,22 +12,7 @@ const RegisterSale = () => {
     const { user } = useAuth();
 
     const createSale = async () => {
-        const sales = await getSales(user.id);
-        let isFirst = true;
-        const actualMonth = new Date().getMonth() + 1;
-        const salesOfMonth = [];
-        sales.forEach(sale => {
-            const saleMonth = sale.data().date.split("-")[1];
-            if (saleMonth == actualMonth) {
-                salesOfMonth.push(sale.data().value);
-                isFirst = false;
-            }
-        });
-        const totalValueOfMonth = salesOfMonth.length ?
-            salesOfMonth.reduce((value, nextValue) => Number(value) + Number(nextValue)) :
-            0;
-        const hasPercentageBonus = totalValueOfMonth > 10000;
-        registerSale(user, clientName, product, saleValue, saleDate, isFirst, hasPercentageBonus);
+        registerSale(user, clientName, product, saleValue, saleDate);
     }
 
     return (

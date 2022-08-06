@@ -3,6 +3,8 @@ import getPendingSales from "../../../services/getPendingSales";
 import formatPrice from "../../../utils/formatPrice";
 import * as S from "../styles";
 import updateSale from "../../../services/updateSale";
+import calculateCommissionBonus from "../../../utils/calculateCommissionBonus";
+import useAuth from "../../../hooks/useAuth";
 
 const PendingSales = () => {
 
@@ -23,8 +25,9 @@ const PendingSales = () => {
         setPendingSales();
     }, []);
 
-    const approveSale = async (saleId, clientName, value, product, date) => {
-        await updateSale(saleId, clientName, value, product, date, "aprovado");
+    const approveSale = async (saleId, clientName, value, product, date, sellerId) => {
+        const [isFirstSale, hasPercentageBonus] = await calculateCommissionBonus(sellerId);
+        await updateSale(saleId, clientName, value, product, date, true, "aprovado", isFirstSale, hasPercentageBonus);
         setPendingSales();
     }
 
@@ -64,7 +67,7 @@ const PendingSales = () => {
                                     <td>{seller.username}</td>
                                     <td>
                                         <S.EditButton
-                                            onClick={() => approveSale(id, clientName, value, product, date)}>
+                                            onClick={() => approveSale(id, clientName, value, product, date, seller.id)}>
                                             Aprovar
                                         </S.EditButton>
                                         <S.DeleteButton

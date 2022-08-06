@@ -1,7 +1,7 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 
-const registerSale = async (user, clientName, product, value, date, isFirst, hasPercentageBonus) => {
+const registerSale = async (user, clientName, product, value, date) => {
 
     try {
         await addDoc(collection(db, "sales"), {
