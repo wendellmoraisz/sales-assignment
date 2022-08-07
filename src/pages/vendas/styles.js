@@ -45,6 +45,12 @@ export const ProductsTable = styled.table`
             padding: 2px;
         }
     }
+
+    @media (max-width: 375px) {
+        td, th, button {
+            font-size: 10px;
+        }
+    }
 `;
 
 export const TableCaption = styled.div`

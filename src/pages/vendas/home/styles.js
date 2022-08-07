@@ -16,5 +16,10 @@ export const Button = styled.button`
     &:hover{
         transform: translate(0px, 5px);
         border-bottom: 1px solid #7A4495;
-}
+    }
+
+    @media(max-width: 450px){
+        padding: 8px 16px;
+        font-size: 16px;
+    }
 `;
