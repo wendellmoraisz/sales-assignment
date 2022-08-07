@@ -3,7 +3,6 @@ import Router from "next/router";
 import { useState } from "react";
 import * as S from "../components/editSaleForm/styles";
 import signInWithEmail from "../services/signInWithEmail";
-import signInWithGoogle from "../services/signInWithGoogle";
 import getUser from "../services/getUser";
 import MessagePopup from "../components/MessagePopup";
 
@@ -54,6 +53,7 @@ const Login = () => {
                     null
             }
             <S.FormWrapper>
+                <h2 style={{ margin: "auto" }}>Login</h2>
                 <p>Email</p>
                 <input type="text" onChange={e => setUserEmail(e.target.value)} />
                 <p>Senha</p>
