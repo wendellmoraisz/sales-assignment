@@ -2,11 +2,8 @@ import useAuth from "../hooks/useAuth";
 import Router from "next/router";
 import { useState } from "react";
 import * as S from "../components/editSaleForm/styles";
-import { GoogleLoginButton } from "./styles";
 import signInWithEmail from "../services/signInWithEmail";
 import signInWithGoogle from "../services/signInWithGoogle";
-import Image from "next/image";
-import googleLogo from "../assets/google-icon.svg";
 import getUser from "../services/getUser";
 import MessagePopup from "../components/MessagePopup";
 
@@ -47,12 +44,6 @@ const Login = () => {
         setTimeout(() => setLoginError(false), 2000);
     }
 
-    const setLoginWithGoogle = async () => {
-        const result = await signInWithGoogle();
-        if (result.user) return setUserLogin(result.user);
-        console.log(result);
-    }
-
     return (
         <S.Container>
             {
@@ -72,10 +63,6 @@ const Login = () => {
                     onClick={setLoginWithEmail}>
                     Entrar
                 </S.ConfirmButton>
-                <GoogleLoginButton onClick={setLoginWithGoogle} >
-                    <Image src={googleLogo} width="25" height="25" alt="Google logo" />
-                    Entrar com o Google
-                </GoogleLoginButton>
             </S.FormWrapper>
         </S.Container>
     )
