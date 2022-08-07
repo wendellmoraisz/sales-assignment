@@ -1,6 +1,6 @@
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import * as S from "./styles";
+import * as S from "../../../styles/vendas.styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPencil, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import useAuth from "../../../hooks/useAuth";
 import Link from "next/link";
 import * as S from "../../../components/editSaleForm/styles";
-import { Button } from "./styles";
+import { Button } from "../../../../styles/home.styles";
 import AccessDeniedPage from "../../../components/accessDenied";
 import verifyUserRole from "../../../utils/verifyUserRole";
 

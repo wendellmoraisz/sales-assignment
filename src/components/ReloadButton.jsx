@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
-import * as S from "../pages/vendas/styles";
+import * as S from "../../styles/vendas.styles";
 
 const ReloadButton = ({ onClickAction }) => {
 

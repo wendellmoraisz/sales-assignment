@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import getPendingSales from "../../../services/getPendingSales";
 import formatPrice from "../../../utils/formatPrice";
-import * as S from "../styles";
+import * as S from "../../../../styles/vendas.styles";
 import updateSale from "../../../services/updateSale";
 import calculateCommissionBonus from "../../../utils/calculateCommissionBonus";
 import ReloadButton from "../../../components/ReloadButton";

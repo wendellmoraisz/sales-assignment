@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Button } from "../../pages/vendas/styles";
+import { Button } from "../../../styles/vendas.styles";
 
 export const Container = styled.div`
     height: 100%;

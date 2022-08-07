@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as S from "./styles";
+import * as S from "../../../../styles/cadastrar-venda.styles";
 import registerSale from "../../../services/registerSale";
 import useAuth from "../../../hooks/useAuth";
 import MessagePopup from "../../../components/MessagePopup";
