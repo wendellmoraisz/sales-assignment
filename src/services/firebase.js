@@ -3,13 +3,15 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import apiKeys from "../../apiKeys";
 
+const { apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId } = apiKeys;
+
 const firebaseConfig = {
-    apiKey: apiKeys.apiKey,
-    authDomain: apiKeys.authDomain,
-    projectId: apiKeys.projectId,
-    storageBucket: apiKeys.storageBucket,
-    messagingSenderId: apiKeys.messagingSenderId,
-    appId: apiKeys.appId,
+    apiKey: apiKey,
+    authDomain: authDomain,
+    projectId: projectId,
+    storageBucket: storageBucket,
+    messagingSenderId: messagingSenderId,
+    appId: appId,
 };
 
 const app = initializeApp(firebaseConfig);
