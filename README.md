@@ -1,6 +1,11 @@
 # Sales Assignment
 
+O projeto consiste em um sistema onde o vendedor vai lançar sua venda e no final conferir todas suas vendas efetuadas
 
+Além disso, o gerente pode aprovar ou recusar as vendas efetuadas pelo vendedor.
+
+
+Link do projeto: https://sales-assignment-lyart.vercel.app/
 
 # Tecnologias utilizadas
 - [Next.js](https://nextjs.org/)
